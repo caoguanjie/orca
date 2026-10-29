@@ -392,8 +392,20 @@ describe('file explorer open target', () => {
       updateSettingsOrThrow: async () => {
         useAppStore.setState(({ settings }) => ({
           settings: settings && { ...settings, floatingTerminalEnabled: true },
-          worktreesByRepo: {},
-          repos: []
+          repos: [
+            {
+              ...TEST_REPO,
+              path: '/repo',
+              executionHostId: 'ssh:box',
+              connectionId: 'box'
+            }
+          ],
+          worktreesByRepo: {
+            [TEST_REPO.id]: [
+              makeWorktree({ id: 'wt-1', repoId: TEST_REPO.id, path: '/repo', hostId: 'ssh:box' })
+            ]
+          },
+          activeWorkspaceExecutionHostId: 'ssh:box'
         }))
       }
     }))
